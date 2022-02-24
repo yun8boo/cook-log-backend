@@ -1,0 +1,30 @@
+version: "3"
+services:
+  node:
+    container_name: cook_log_backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    tty:  true
+    ports:
+      - 5000:5000
+
+  postgres:
+    container_name: cook-log-postgres
+    image: postgres:13
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cook_log_db
+      POSTGRES_INITDB_ARGS: '--encoding=UTF-8'
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ./db/postgres_data:/var/lib/postgresql/data
+      - ./db/initdb:/docker-entrypoint-initdb.d
+
+volumes:
+  db_data: {}
