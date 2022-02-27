@@ -9,6 +9,10 @@ WORKDIR ./
 
 COPY package.json .
 COPY yarn.lock .
+COPY prisma ./prisma
+RUN yarn install
+RUN npx prisma generate
+
 
 EXPOSE 5000
 
